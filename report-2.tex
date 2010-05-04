@@ -1,0 +1,26 @@
+% !TEX TS-program = xelatex 
+% !TEX encoding = UTF-8
+\documentclass{article}
+
+% AMS Math
+\usepackage{amsmath}
+
+% XɘLᴬTeX & fonts
+\usepackage{fontspec, xunicode, xltxtra, unicode-math}
+\setmainfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Constantia}
+\setsansfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Candara}
+\setmonofont[Numbers=OldStyle]{Consolas}
+\setmathfont{Cambria Math}
+
+\usepackage[debug]{hyperref}
+
+\begin{document}
+Work in progress is publicly visible on my blog,
+\url{http://optimalcontrol.wordpress.com/}.
+
+Work in progress is publicly visible on my blog,
+\href{http://optimalcontrol.wordpress.com/}{%
+\texttt{http://optimalcontrol.\\wordpress.com/}}.
+
+
+\end{document}
