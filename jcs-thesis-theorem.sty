@@ -1,0 +1,27 @@
+\ProvidesPackage{jcs-thesis-theorem}
+  [2010/05/14 v0.1 Customize theorems, examples, etc.]
+
+\RequirePackage[amsmath, hyperref, thmmarks]{ntheorem}	%, thref
+\theoremstyle{plain}
+\theoremsymbol{}
+\theoremheaderfont{\scshape}
+\theoremseparator{:}
+\theorembodyfont{\upshape}
+
+\newtheoremstyle{example}%
+	{\item[\hskip\labelsep \textsc{##1 ##2}:]}%
+	{\item[\hskip\labelsep \textsc{##1 ##2} (\textit{##3}):]}
+\newtheoremstyle{nonumberexample}%
+	{\item[\hskip\labelsep \textsc{##1}:]}%
+	{\item[\hskip\labelsep \textsc{##1} (\textit{##3}):]}
+\theoremstyle{example}
+\newtheorem*{ex}{Example}
+\newtheorem{defn}{Definition}[section]
+
+% Custom cross-references
+\RequirePackage{hyperref}
+
+\RequirePackage{cleveref}
+\crefname{ex}{Example}{examples}
+\crefname{defn}{Definition}{definitions}
+

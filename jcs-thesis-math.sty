@@ -1,0 +1,46 @@
+\ProvidesPackage{jcs-thesis-math}
+  [2010/05/14 v0.1 Customize math stuff]
+\usepackage{ifxetex}
+
+
+% Subscripts for initial and final state/time/etc.
+\newcommand*{\il}{0}	% {{\mathrm{i}}}
+\newcommand*{\fl}{{\mathrm{f}}}
+
+% Really common vector names
+\newcommand*{\veca}{{\mathbf{a}}}
+\newcommand*{\vecu}{{\mathbf{u}}}
+\newcommand*{\vecx}{{\mathbf{x}}}
+
+% Integrate over all relevant time
+\newcommand*{\intt}[1]{\int_{t_\il}^{t_\fl}\!\!#1}
+
+% Generally useful:
+\newcommand*{\abs}[1]{\lvert#1\rvert}
+\newcommand*{\norm}[1]{\lVert#1\rVert}
+\newcommand*{\textinterject}[1]{\text{\enspace#1\enspace}}
+
+% Differential d
+\newcommand*{\diffd}{d}	% or {ⅆ} or {\mathrm{d}}
+% Give \dd the same height whether followed by an exponent or no.
+\newcommand*{\dd}{\@ifnextchar^{\jcs@dd}{\jcs@dd^{}}}
+% Give \jcs@dd effective height of \mathstrut,
+% 	operator spacing on left & funky spacing code on right.
+\def \jcs@dd^#1{\mathop{\diffd\mathstrut}\nolimits^{#1}\jcs@dd@eatspace}
+% Look at what follows the \dd, then put space (or not).
+\def \jcs@dd@eatspace{\futurelet\jcs@dd@arg\jcs@dd@putspace}
+% Put space, or don’t, depending on whether next token is brace or no
+\def \jcs@dd@putspace{%
+	\def \@jcs@dd@space {\!\!}%
+	\ifx \jcs@dd@arg(%
+		\let \@jcs@dd@space = \!%
+	\else\ifx \jcs@dd@arg[%
+		\let \@jcs@dd@space=  \!%
+	\else\ifx \jcs@dd@arg\{%
+		\let \@jcs@dd@space = \!%
+	\fi\fi\fi\@jcs@dd@space}
+\ifxetex
+	\catcode`\ⅆ=\active
+	\letⅆ=\dd
+\else\fi
+

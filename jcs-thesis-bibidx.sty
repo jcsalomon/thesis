@@ -1,0 +1,24 @@
+\ProvidesPackage{jcs-thesis-bibidx}
+  [2010/05/14 v0.1 Customize bibliography and indexing]
+
+% Bibliography
+\RequirePackage[hyperref, style=authoryear]{biblatex}
+\bibliography{control}
+\renewcommand{\subtitlepunct}{\ifterm{}{\addcolon}\space}
+\DeclareCiteCommand*{\citetitle}
+	{\boolfalse{citetracker}%
+		\boolfalse{pagetracker}%
+		\usebibmacro{prenote}}
+	{\indexfield{indextitle}%
+		\printtext[citetitle]{%
+		\printfield[noformat]{title}%
+		\iffieldundef{subtitle}{}{\subtitlepunct}%
+		\printfield[noformat]{subtitle}}}%
+	{\multicitedelim}
+	{\usebibmacro{postnote}}
+
+%% Indexing
+%\RequirePackage{makeidx}
+%\RequirePackage{showidx}
+%\makeindex
+

@@ -1,0 +1,23 @@
+\ProvidesPackage{jcs-thesis-punct}
+  [2010/05/14 v0.1 Customize abbreviations & punctuation]
+\usepackage{ifxetex}
+
+\RequirePackage{xspace}
+\RequirePackage[abbreviations]{foreign}
+\defasforeign*[adastra]{Sic itur ad astra}	% Virgil, Aeneid book IX, line 641
+\ifxetex
+	\DeclareRobustCommand\dash{%
+		\ifvmode\leavevmode\else\unskip\nobreak\thinspace\fi
+		\textemdash\thinspace\ignorespaces
+	}
+	\catcode`\—=\active
+	\let—=\dash
+	\newcommand{\No}{№\xspace}
+\else
+	\newcommand{\No}{No\xperiod}
+\fi
+\makeatletter
+	\let\old@ampersand\&
+	\renewcommand{\&}{\textit{\old@ampersand}}
+\makeatother
+
