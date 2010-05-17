@@ -6,7 +6,7 @@ This work is copyright © 2008–2009 Joel C. Salomon and the Cooper Union.  **N
 
 ## LaTeX compilation
 
-I’m using some experimental and in-developement packages which are not yet in [TeX Live 2009](http://www.tug.org/texlive/), including Philipp Lehman’s [`biblatex`](http://www.ctan.org/tex-archive/help/Catalogue/entries/biblatex.html) and Will Robertson’s [`unicode-math`](http://github.com/wspr/unicode-math/), although I’ve got some conditional code in place so as not to require XɘTeX.
+I’m using some experimental and in-development packages which are not yet in [TeX Live 2009](http://www.tug.org/texlive/), mainly Will Robertson’s [`unicode-math`](http://github.com/wspr/unicode-math/), although I’ve got some conditional code in place so as not to require XɘTeX.
 
 ---
 —Joel C. Salomon
