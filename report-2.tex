@@ -9,6 +9,8 @@
 \usepackage{jcs-thesis-theorem}
 \usepackage{jcs-thesis-math}
 
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
 
 \begin{document}
 \title{Control Systems for the\\%
@@ -113,6 +115,17 @@ via \emph{dynamic programming}.
 
 \section{The Principle of Optimality}
 Foo!
+\begin{tikzpicture}[description/.style={fill=white, inner sep=2pt}]
+	\matrix (m) [matrix of math nodes, row sep=3em,
+		column sep=3.5em, text height=1.5ex, text depth=0.25ex]
+	{   & b & c \\
+	  a &   & e \\ };
+	\path[->]
+	(m-2-1) edge node[auto] {$J_{ab}$} (m-1-2)
+	(m-1-2) edge node[auto] {$J_{be}$} (m-2-3)
+	        edge node[auto] {$J_{bc}$} (m-1-3)
+	(m-1-3) edge node[auto] {$J_{ce}$} (m-2-3);
+\end{tikzpicture}
 
 \section{Future Work}
 The next Interim Report will focus on …
