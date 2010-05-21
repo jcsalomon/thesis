@@ -1,0 +1,28 @@
+\ProvidesPackage{jcs-thesis-graphics}
+  [2010/05/21 v0.1 Customize graphics]
+
+\RequirePackage{tikz}
+\usetikzlibrary{decorations.markings,arrows}
+
+% Custom style: put an arrowhead midway along the path
+\tikzset{with arrow/.style={
+	decoration={
+		markings,
+		mark=at position 0.5 with {\arrow[line width=0.5mm]{>}}},
+		postaction={decorate}}}
+
+\RequirePackage{subfig}
+\RequirePackage{caption}
+\captionsetup{
+	margin={10em,0pt},oneside,
+	font=small,
+	labelfont=bf,labelsep=space}
+\captionsetup[subfloat]{
+	subrefformat=parens,
+	justification=centering,
+	margin={0pt},labelfont=normalfont}
+
+% These ought to be handled by cleveref
+\newcommand{\sfref}[1]{fig.~\subref*{#1}}
+\newcommand{\Sfref}[1]{Figure~\subref*{#1}}
+
