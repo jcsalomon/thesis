@@ -112,21 +112,46 @@ which is finding a closed-loop
 via \emph{dynamic programming}.
 
 \section{The Principle of Optimality}
-Foo!
-\begin{tikzpicture}[>=latex,thick]
-	\draw[fill=black] (0.0,0.0)  circle (0.08) coordinate (a);
-	\draw[fill=black] (1.5,2.0)  circle (0.08) coordinate (b);
-	\draw[fill=black] (8.0,-0.4) circle (0.08) coordinate (e);
-	\draw[fill=black] (4.0,1.8)  circle (0.08) coordinate (c);
+\begin{figure}[h]
+	\centering
+	\subfloat[][]{
+		\label{fig:princeopt:optpath-a}
+	\begin{tikzpicture}[>=stealth,thick]
+		\draw[fill=black] (0.0,0.0)  circle (0.08) coordinate (a);
+		\draw[fill=black] (1.0,1.0)  circle (0.08) coordinate (b);
+		\draw[fill=black] (4.0,-0.4) circle (0.08) coordinate (e);
 
-	\draw[with arrow] (a) node[below=1ex] {$a$} [out=60,in=220] to
-		node[left=1ex] {$J_{ab}$} (b) node[above=1ex] {$b$};
-	\draw[with arrow] (b) [out=-50, in=140] to
-		node[below=1ex] {$J_{be}$} (e) node[right=1ex] {$e$};
-	\draw[dashed] (b) [out=10,in=160] to (c) node[above=1ex] {$c$};
-	\draw[dashed, with arrow] (c) [out=10,in=130] to
-		node[above=1ex] {$J_{bce}$} (e);
-\end{tikzpicture}
+		\draw[with arrow] (a) node[below=1ex] {$a$} [out=70,in=220]
+			to node[left=1ex] {$J_{ab}$} (b) node[above=1ex] {$b$};
+		\draw[with arrow] (b) [out=-50, in=140] to
+			node[below=1ex] {$J_{be}$} (e) node[right=1ex] {$e$};
+	\end{tikzpicture}}
+	\quad
+	\subfloat[][]{
+		\label{fig:princeopt:optpath-b}
+	\begin{tikzpicture}[>=stealth,thick]
+		\draw[fill=black] (0.0,0.0)  circle (0.08) coordinate (a);
+		\draw[fill=black] (1.0,1.0)  circle (0.08) coordinate (b);
+		\draw[fill=black] (2.8,1.1)  circle (0.08) coordinate (c);
+		\draw[fill=black] (4.0,-0.4) circle (0.08) coordinate (e);
+
+		\draw[with arrow] (a) node[below=1ex] {$a$} [out=70,in=220]
+			to node[left=1ex] {$J_{ab}$} (b) node[above=1ex] {$b$};
+		\draw[with arrow] (b) [out=-50, in=140] to
+			node[below=1ex] {$J_{be}$} (e) node[right=1ex] {$e$};
+		\draw[dashed] (b) [out=0,in=150] to (c) node[above=1ex] {$c$};
+		\draw[dashed, with arrow] (c) [out=280,in=100] to
+			node[above=1ex] {$J_{bce}$} (e);
+	\end{tikzpicture}}
+	\caption{\subref{fig:princeopt:optpath-a}
+			Optimal path from $a$ to $e$.
+			\subref{fig:princeopt:optpath-b}
+			Two possible optimal paths from $b$ to $e$.}
+	\label{fig:princeopt:optpath}
+\end{figure}
+See \Cref{fig:princeopt:optpath}.
+The optimal path for a multistage decision process
+is shown in \sfref{fig:princeopt:optpath-a}.
 
 \section{Future Work}
 The next Interim Report will focus on …
