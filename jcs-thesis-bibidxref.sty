@@ -1,5 +1,5 @@
-\ProvidesPackage{jcs-thesis-bibidx}
-  [2010/05/14 v0.1 Customize bibliography and indexing]
+\ProvidesPackage{jcs-thesis-bibidxref}
+  [2010/05/21 v0.2 Customize bibliography, indexing, and references]
 
 % Bibliography
 \RequirePackage[hyperref, style=authoryear]{biblatex}
@@ -22,3 +22,9 @@
 %\RequirePackage{showidx}
 %\makeindex
 
+% Custom cross-references
+\RequirePackage{hyperref}
+
+\RequirePackage{cleveref}
+\crefname{ex}{Example}{examples}
+\crefname{defn}{Definition}{definitions}
