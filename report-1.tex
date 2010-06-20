@@ -25,11 +25,11 @@
 \usepackage{xspace}
 \usepackage[abbreviations]{foreign}
 \defasforeign*[adastra]{Sic itur ad astra}	% Virgil, Aeneid book IX, line 641
-\DeclareRobustCommand\dash{%
-	\ifvmode\leavevmode\else\unskip\nobreak\thinspace\fi
-	\textemdash\thinspace\ignorespaces
-}
 \ifxetex
+	\DeclareRobustCommand\dash{%
+		\ifvmode\leavevmode\else\unskip\nobreak\thinspace\fi
+		\textemdash\thinspace\ignorespaces
+	}
 	\catcode`\—=\active
 	\let—=\dash
 	\newcommand{\No}{№\xspace}
@@ -174,7 +174,7 @@ and % \(u_1(t)\), \(u_2(t)\), …, \(u_m(t)\)
 \]
 as the \emph{control inputs} to the process at time \( t \),
 then we can describe the dynamics of the system
-by a set of \( n \) first-order differential equations—
+by a set of \( n \) first-order differential equations —
 the \emph{state equations}:
 \begin{equation} \label{eq:stateeq}
 \begin{split}
