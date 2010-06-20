@@ -13,19 +13,6 @@
 	\setsansfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Candara}
 	\setmonofont[Numbers=OldStyle]{Consolas}
 	\setmathfont{Cambria Math}
-	% Work-around for buggy \XeTeXmathaccent
-	\AtBeginDocument{\let\olddot\dot}
-	\AtBeginDocument{\renewcommand\dot[1]{\olddot{#1}{}}}
-	% Stuff missing from unicode-math.tex
-	\makeatletter
-		\let\UnicodeMathSymbol\um@mathsymbol@noparse
-		\UnicodeMathSymbol{"02026}{\mathellipsis}{\mathrel}{ellipsis}%
-		\UnicodeMathSymbol{"02032}{\prime}{\mathord}{prime}%
-		\let\mathellipsis …
-		\let\@ldots …
-		\let\@cdots ⋯
-		\let\prime ′
-	\makeatother
 \else
 	\usepackage[utf8]{inputenc}
 	\let\mathbfup\mathbf
@@ -240,7 +227,7 @@ to the set of equations in~\eqref{eq:stateeq} above:
 The state equations can now be rewritten as
 \begin{equation}
 	\label{eq:stateeq:vect}
-	\tag{\ref*{eq:stateeq}$\prime$}
+	\tag{\ref*{eq:stateeq}${}′$}
 	\dot{\mathbfup{x}}(t) =
 		\func{\mathbfup{a}}{\mathbfup{x}(t), \mathbfup{u}(t), t}
 \end{equation}
