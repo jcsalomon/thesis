@@ -97,6 +97,38 @@
 \crefname{ex}{Example}{examples}
 \crefname{defn}{Definition}{definitions}
 
+
+% Local math stuff
+\newcommand*{\fin}{{\mathrm{f}}}
+\newcommand*{\ini}{0}	%{{\mathrm{i}}}
+\newcommand*{\veca}{{\mathbf{a}}}
+\newcommand*{\vecu}{{\mathbf{u}}}
+\newcommand*{\vecx}{{\mathbf{x}}}
+
+\newcommand*{\intt}[1]{\int_{t_\ini}^{t_\fin}\!\!#1}
+
+% Differential d
+\newcommand*{\diffd}{d}	% ⅆ
+\makeatletter
+	% Give \dd the same height whether followed by an exponent or no.
+	\newcommand*{\dd}{\@ifnextchar^{\jcs@dd}{\jcs@dd^{}}}
+	% Give \jcs@dd effective height of \mathstrut,
+	% 	operator spacing on left & funky spacing code on right.
+	\def \jcs@dd^#1{\mathop{\diffd\mathstrut}\nolimits^{#1}\jcs@dd@eatspace}
+	% Look at what follows the \dd, then put space (or not).
+	\def \jcs@dd@eatspace{\futurelet\jcs@dd@arg\jcs@dd@putspace}
+	% Put space, or don’t, depending on whether next token is brace or no
+	\def \jcs@dd@putspace{%
+		\def \@jcs@dd@space {\!\!}%
+		\ifx \jcs@dd@arg(%
+			\let \@jcs@dd@space \!
+		\else\ifx \jcs@dd@arg[%
+			\let \@jcs@dd@space \!
+		\else\ifx \jcs@dd@arg\{%
+			\let \@jcs@dd@space \!
+		\fi\fi\fi\@jcs@dd@space}
+\makeatother
+
 \begin{document}
 \title{Control Systems for the\\%
 %	Northrop Grumman\\%
@@ -210,47 +242,47 @@ to the set of equations in~\eqref{eq:stateeq} above:
 \begin{defn}[State \& Control Vectors]
 	We define the vectors
 	\[
-		\mathbfup{x}(t) \triangleq
+		\vecx(t) \triangleq
 		\begin{bmatrix}
 			x_1(t) \\ x_2(t) \\ \vdots \\ x_n(t)
 		\end{bmatrix}
 		\text{ and }
-		\mathbfup{u}(t) \triangleq
+		\vecu(t) \triangleq
 		\begin{bmatrix}
 			u_1(t) \\ u_2(t) \\ \vdots \\ u_m(t)
 		\end{bmatrix};
 	\]
-	we call \( \mathbfup{x}(t) \) the \emph{state vector}
-	and  \( \mathbfup{u}(t) \) the \emph{control vector}
+	we call \( \vecx(t) \) the \emph{state vector}
+	and  \( \vecu(t) \) the \emph{control vector}
 	for the system at time \( t \).
 \end{defn}
 The state equations can now be rewritten as
 \begin{equation}
 	\label{eq:stateeq:vect}
 	\tag{\ref*{eq:stateeq}${}′$}
-	\dot{\mathbfup{x}}(t) =
-		\func{\mathbfup{a}}{\mathbfup{x}(t), \mathbfup{u}(t), t}
+	\dot{\vecx}(t) =
+		\func{\veca}{\vecx(t), \vecu(t), t}
 \end{equation}
-where the definition of \( \mathbfup{a} \) in \eqref{eq:stateeq:vect}
+where the definition of \( \veca \) in \eqref{eq:stateeq:vect}
 is apparent by comparison to \eqref{eq:stateeq}.
 
-Over the time interval \( t \in [t_0, t_f] \), for systems as just described,
+Over the time interval \( t \in [t_\ini, t_\fin] \), for systems as just described,
 the following definitions hold:
 \begin{defn}[State \& Control Trajectories]
-	A history of control-input values  \( \mathbfup{u}(t) \)
-	over the interval \( [t_0, t_f] \)
-	is denoted by \( \mathbfup{u} \)
+	A history of control-input values  \( \vecu(t) \)
+	over the interval \( [t_\ini, t_\fin] \)
+	is denoted by \( \vecu \)
 	and is called a \emph{control history}, or simply a \emph{control}.
 	\par\noindent
-	A history of state values  \( \mathbfup{x}(t) \)
-	over the interval \( [t_0, t_f] \)
+	A history of state values  \( \vecx(t) \)
+	over the interval \( [t_\ini, t_\fin] \)
 	is called a \emph{state trajectory}
-	and is denoted by \( \mathbfup{x} \).
+	and is denoted by \( \vecx \).
 \end{defn}\noindent
 The terms “history”, “curve”, and “trajectory” are interchangeable.
 Note carefully, however, the distinction between
-the state \emph{trajectory} \( \mathbfup{x} \)
-and the instantaneous \emph{value} \( \mathbfup{x}(t) \) of the state vector
+the state \emph{trajectory} \( \vecx \)
+and the instantaneous \emph{value} \( \vecx(t) \) of the state vector
 at some given time \( t \).
 
 
