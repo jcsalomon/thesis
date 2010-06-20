@@ -112,7 +112,7 @@
 \newcommand*{\textinterject}[1]{\text{\enspace#1\enspace}}
 
 % Differential d
-\newcommand*{\diffd}{d}	% ⅆ
+\newcommand*{\diffd}{d}	% or {ⅆ} or {\mathrm{d}}
 \makeatletter
 	% Give \dd the same height whether followed by an exponent or no.
 	\newcommand*{\dd}{\@ifnextchar^{\jcs@dd}{\jcs@dd^{}}}
@@ -125,11 +125,11 @@
 	\def \jcs@dd@putspace{%
 		\def \@jcs@dd@space {\!\!}%
 		\ifx \jcs@dd@arg(%
-			\let \@jcs@dd@space \!
+			\let \@jcs@dd@space = \!%
 		\else\ifx \jcs@dd@arg[%
-			\let \@jcs@dd@space \!
+			\let \@jcs@dd@space=  \!%
 		\else\ifx \jcs@dd@arg\{%
-			\let \@jcs@dd@space \!
+			\let \@jcs@dd@space = \!%
 		\fi\fi\fi\@jcs@dd@space}
 \makeatother
 
