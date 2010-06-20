@@ -301,6 +301,41 @@ with a set of predicates (often inequalities) on state or input variables, \eg,
 \]
 
 \subsection{Specifying a Performance Criterion}\label{sec:criterion}
+Obviously, if a control system is to be “optimal”,
+there must be some measure of performance to be selected for.
+
+In classical control theory, the measure is often the system response
+to step or ramp input, or a frequency response characteristic.
+More generally, we define a performance measure
+\begin{equation}
+	\label{eq:measure}
+	J = \func{h}{\vecx(t_\fin),t_\fin} +
+		\intt{\func{g}{\vecx(t), \vecu(t), t} \dd t}
+\end{equation}
+for some scalar functions $h$ \& $g$, then attempt to minimize $J$.
+The choice of $h$ \& $g$ usually has some physical motivation.
+\begin{ex}[Minimum-Time Problems]
+	If the goal of the controller is to transfer the system
+	from an arbitrary initial state $\vecx(t_\ini) = \vecx_\ini$
+	to a specified target space $S$ in minimum time,
+	then the performance measure to be minimized is
+	\[
+		J = t_\fin - t_\ini = \intt{\dd t},
+	\]
+	with $t_\fin$ defined as the first instant when $\vecx(t) \in S$.
+\end{ex}\noindent
+Other common performance measures are minimum-final-deviation from a reference, \ie,
+\[
+	J =	\left] \mathbf{r}(t_\fin) - \vecx(t_\fin) \right[^2 =
+		\sum_{i=1}^n \left[ x_i(t_\fin) - r_i(t_\fin) \right]^2,
+\]
+and minimum-control-effort, \ie,
+\[
+	J = \intt{u(t) \dd t}
+		\text{ or }
+	J = \intt{u^2(t) \dd t}
+\]
+for fuel or energy use, respectively.
 
 \cleardoublepage\printbibliography[heading=bibintoc]
 
