@@ -340,6 +340,70 @@ and minimum-control-effort, \ie,
 for fuel or energy use, respectively.
 
 
+\section{Modeling the Simplified Soft-Landing Problem}\label{sec:landermodel}
+\paragraph{Assumptions}
+As in \parencite{shinners:advanced} and \parencite{kirk:optintro},
+restrict the discussion to the simplified 1-dimensional problem.
+Specifically, we assume:
+\begin{itemize}
+	\item	The only forces acting on the craft are its own weight and thrust,
+		\ie, aerodynamic forces \etc. are negligible;
+	\item	Lateral motion can be ignored:
+		descent is vertical toward a locally-flat moon
+		and thrust is tangent to velocity;
+	\item	Gravitational acceleration is constant
+		because of the nearness of the spacecraft to the moon;
+	\item	The relative velocity of the exhaust gases is constant
+		with respect to the vehicle;
+		and
+	\item	The mass rate is constrained by
+		$ -M ≤ \dot m ≤ 0 $.
+\end{itemize}
+
+\paragraph{State Equations}
+The equation of motion for the lander is
+\begin{equation} \label{eq:motion}
+\begin{split}
+	m(t)\ddot y(t)	& = -gm(t) + T(t) \\
+				& = -gm(t) - k\dot m(t).
+\end{split}
+\end{equation}
+We define the states of the system as $x_1 ≜ y$, $x_2 ≜ \dot y$, $x_3 ≜ m$,
+and the control as $u ≜ \dot m$, yielding the state equations
+\begin{subequations} \label{eq:state}
+\begin{align}
+	\dot x_1(t) &= x_2(t) \\
+	\dot x_2(t) &= -g - \frac{k}{x_3(t)} u(t) \\
+	\dot x_3(t) &= u(t).
+\end{align}
+\end{subequations}
+
+\paragraph{Constraints}
+The constraint equations are the limit on mass flow from above,
+\begin{subequations} \label{eq:contraints}
+\begin{equation}
+	-M ≤ u(t) ≤ 0,
+\end{equation}
+and the boundary condition
+\begin{equation}
+	x_2(t_\fl) = 0.
+\end{equation}
+where $t_\fl$ is defined as the first instant when $x_1(t) = 0$.
+(For $t > t_\fl$, the surface of the moon will \emph{ensure}
+that $x_2(t) = \dot y(t)= 0$, a process known as lithobraking.)
+\end{subequations}
+An additional constraint, the limited fuel-supply,
+will be incorporated into the performance measure.
+
+\paragraph{Performance Measure}
+In its simplest form, the lunar lander is a minimum-fuel problem, \ie,
+\begin{equation}
+	J = \intt{-\dot x_2 m(t)\dd t}.
+\end{equation}
+The problem is unsolvable if $J^{⋆}$, the minimum attainable value for $J$,
+exceeds the initial fuel load of the craft.
+
+
 \section{Future Work}
 The next Interim Report will focus on dynamic programming,
 a derivation of the Hamilton-Jacobi-Bellman equation, and, time permitting,
