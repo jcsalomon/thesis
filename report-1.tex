@@ -1,0 +1,285 @@
+% !TEX TS-program = xelatex 
+% !TEX encoding = UTF-8
+\documentclass{article}
+
+\usepackage{ifxetex}
+
+% AMS Math
+\usepackage{amsmath}
+
+\ifxetex	% XɘLᴬTeX & fonts
+	\usepackage{fontspec, xunicode, xltxtra, unicode-math}
+	\setmainfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Constantia}
+	\setsansfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Candara}
+	\setmonofont[Numbers=OldStyle]{Consolas}
+	\setmathfont{Cambria Math}
+	% Work-around for buggy \XeTeXmathaccent
+	\AtBeginDocument{\let\olddot\dot}
+	\AtBeginDocument{\renewcommand\dot[1]{\olddot{#1}{}}}
+	% Stuff missing from unicode-math.tex
+	\makeatletter
+		\let\UnicodeMathSymbol\um@mathsymbol@noparse
+		\UnicodeMathSymbol{"02026}{\mathellipsis}{\mathrel}{ellipsis}%
+		\UnicodeMathSymbol{"02032}{\prime}{\mathord}{prime}%
+		\let\mathellipsis …
+		\let\@ldots …
+		\let\@cdots ⋯
+		\let\prime ′
+	\makeatother
+\else
+	\usepackage[utf8]{inputenc}
+	\let\mathbfup\mathbf
+\fi
+% Matrices, vectors, functions, etc.
+\usepackage{mlist}
+
+% Abbreviations & punctuation
+\usepackage{xspace}
+\usepackage[abbreviations]{foreign}
+\defasforeign*[adastra]{Sic itur ad astra}	% Virgil, Aeneid book IX, line 641
+\DeclareRobustCommand\dash{%
+	\ifvmode\leavevmode\else\unskip\nobreak\thinspace\fi
+	\textemdash\thinspace\ignorespaces
+}
+\ifxetex
+	\catcode`\—=\active
+	\let—=\dash
+	\newcommand{\No}{№\xspace}
+\else
+	\newcommand{\No}{No\xperiod}
+\fi
+\makeatletter
+	\let\old@ampersand\&
+	\renewcommand{\&}{\textit{\old@ampersand}}
+\makeatother
+
+% Date & time formatting
+\usepackage{datetime}
+\newdateformat{usvardate}{%
+	\dayofweekname{\THEDAY}{\THEMONTH}{\THEYEAR} %
+	\monthname[\THEMONTH] \ordinaldate{\THEDAY}, %
+	\THEYEAR}
+\usvardate
+\newtimeformat{scampmtime}{%
+	\THEHOURXII\timeseparator\twodigit{\THEMINUTE}~\textsc{\amorpmname}}
+\settimeformat{scampmtime}
+
+% Bibliography
+\usepackage[hyperref, style=authoryear]{biblatex}
+\bibliography{control}
+\renewcommand{\subtitlepunct}{\ifterm{}{\addcolon}\space}
+\DeclareCiteCommand*{\citetitle}
+	{\boolfalse{citetracker}%
+		\boolfalse{pagetracker}%
+		\usebibmacro{prenote}}
+	{\indexfield{indextitle}%
+		\printtext[citetitle]{%
+		\printfield[noformat]{title}%
+		\iffieldundef{subtitle}{}{\subtitlepunct}%
+		\printfield[noformat]{subtitle}}}%
+	{\multicitedelim}
+	{\usebibmacro{postnote}}
+
+% Indexing
+%\usepackage{makeidx, showidx}
+%\makeindex
+
+% Theorems, examples, etc.
+\usepackage[amsmath, hyperref, thmmarks]{ntheorem}	%, thref
+\theoremstyle{plain}
+\theoremsymbol{}
+\theoremheaderfont{\scshape}
+\theoremseparator{:}
+\theorembodyfont{\upshape}
+
+\newtheoremstyle{example}%
+	{\item[\hskip\labelsep \textsc{##1 ##2}:]}%
+	{\item[\hskip\labelsep \textsc{##1 ##2} (\textit{##3}):]}
+\newtheoremstyle{nonumberexample}%
+	{\item[\hskip\labelsep \textsc{##1}:]}%
+	{\item[\hskip\labelsep \textsc{##1} (\textit{##3}):]}
+\theoremstyle{example}
+\newtheorem*{ex}{Example}
+\newtheorem{defn}{Definition}[section]
+
+% Cross-references
+\usepackage[letterpaper, debug]{hyperref}
+
+\usepackage{cleveref}
+\crefname{ex}{Example}{examples}
+\crefname{defn}{Definition}{definitions}
+
+\begin{document}
+\title{Control Systems for the\\%
+%	Northrop Grumman\\%
+	Lunar Lander X-Prize Challenge\\%
+	Interim Report \No 1:\\%
+	Formulation of the Problem}
+\author{Joel C. Salomon}
+\date{\today\\\currenttime}
+\special{pdf: docinfo <<
+	/Title		(Thesis Report 1: Formulation of the Problem)
+\ifxetex /Creator	(XɘLᴬTeX with hyperref package)\else\fi
+	/Author	(Joel C. Salomon)
+	/CreationDate	(D:20090527214601)
+	/ModDate	(D:\pdfdate)
+	/Subject	(Engineering)
+	/Keywords	(control systems;optimal control;rocket landing)
+	>>}
+\maketitle
+
+
+\begin{abstract}
+	“The objective of optimal control theory is \emph{
+	to determine the control signals that will cause a process to
+	satisfy the physical constraints and at the same time
+	minimize \textup{(}or maximize\textup{)} some performance criterion}.”%
+	~\parencite{kirk:optintro}
+\end{abstract}
+
+
+\section*{Overview}
+The basic plan for this thesis project has three main steps:
+\begin{enumerate}
+	\item Work through the math for the soft-landing problem;
+	\item Ditto for the attitude control problem;
+	and, if I have enough time,
+	\item Unify the two problems, probably using Geometric Algebra.
+\end{enumerate}
+Which all \emph{sounds} easy enough….
+
+The basic text I’m using is Donald E. Kirk’s \citetitle*{kirk:optintro}
+from the Prentice-Hall Networks series~\parencite{kirk:optintro}.
+Also useful are Stanley Shinners’s
+\citetitle{shinners:modern}~\parencite{shinners:modern}
+and \citetitle{shinners:advanced}~\parencite{shinners:advanced}.
+
+This report is mainly going to describe the problems I wish to solve for my thesis:
+attitude and position control for a rocket lander.
+Description of actual \emph{work} toward this goal will come in a future report.
+
+
+\cleardoublepage\tableofcontents
+
+
+\section{Modeling the System}\label{sec:model}
+There are three main items that must be included in a mathematical model of a system
+to formulate an optimal control problem:
+the \hyperref[sec:statespace]{system \emph{dynamics}},
+the \hyperref[sec:constraints]{\emph{contraints} on system state},
+and a \hyperref[sec:critereon]{\emph{performance critereon}}.
+The language we use for this is that of \emph{state space}.
+
+
+\subsection[State Space Dynamics]{The State Space Model of System Dynamics}
+	\label{sec:statespace}
+As mentioned, we use the language of state space to model
+the process which we wish to control.
+
+If we define the functions % \(x_1(t)\), \(x_2(t)\), …, \(x_n(t)\)
+\[
+	x_1(t), x_2(t), …, x_n(t)
+\]
+as the \emph{state variables} of the process at time \( t \),
+and % \(u_1(t)\), \(u_2(t)\), …, \(u_m(t)\)
+\[
+	u_1(t), u_2(t), …, u_m(t)
+\]
+as the \emph{control inputs} to the process at time \( t \),
+then we can describe the dynamics of the system
+by a set of \( n \) first-order differential equations—
+the \emph{state equations}:
+\begin{equation} \label{eq:stateeq}
+\begin{split}
+	\dot{x}&_1(t) = \func{a_1}{
+		x_1(t), x_2(t), …, x_n(t),
+		u_1(t), u_2(t), …, u_m(t), t } \\
+	\dot{x}&_2(t) = \func{a_2}{
+		x_1(t), x_2(t), …, x_n(t),
+		u_1(t), u_2(t), …, u_m(t), t } \\
+	{} & \vdots \\
+	\dot{x}&_n(t) = \func{a_n}{
+		x_1(t), x_2(t), …, x_n(t),
+		u_1(t), u_2(t), …, u_m(t), t }.
+\end{split}
+\end{equation}
+Each \( \dot{x}_i(t) \) is a — possibly non-linear —
+function \( a_i \) of the states, the control inputs, and time.
+
+\begin{ex}
+	For the single-axis soft-landing problem,
+	the relevant states of the craft are its mass and vertical position and velocity
+	and the control is the fuel flow to the rocket engine.
+	The dynamics of the system are the result of thrust working against gravity.
+\end{ex}
+\begin{ex}
+	For the attitude-control problem,
+	the states are the craft’s attitude, moment of inertia, and rotational velocity.
+	(A currently-open issue is how best to represent these quantities.)
+\end{ex}
+
+For convenience’s sake, we prefer the tools of linear algebra
+to the set of equations in~\eqref{eq:stateeq} above:
+\begin{defn}[State \& Control Vectors]
+	We define the vectors
+	\[
+		\mathbfup{x}(t) \triangleq
+		\begin{bmatrix}
+			x_1(t) \\ x_2(t) \\ \vdots \\ x_n(t)
+		\end{bmatrix}
+		\text{ and }
+		\mathbfup{u}(t) \triangleq
+		\begin{bmatrix}
+			u_1(t) \\ u_2(t) \\ \vdots \\ u_m(t)
+		\end{bmatrix};
+	\]
+	we call \( \mathbfup{x}(t) \) the \emph{state vector}
+	and  \( \mathbfup{u}(t) \) the \emph{control vector}
+	for the system at time \( t \).
+\end{defn}
+The state equations can now be rewritten as
+\begin{equation}
+	\label{eq:stateeq:vect}
+	\tag{\ref*{eq:stateeq}$\prime$}
+	\dot{\mathbfup{x}}(t) =
+		\func{\mathbfup{a}}{\mathbfup{x}(t), \mathbfup{u}(t), t}
+\end{equation}
+where the definition of \( \mathbfup{a} \) in \eqref{eq:stateeq:vect}
+is apparent by comparison to \eqref{eq:stateeq}.
+
+Over the time interval \( t \in [t_0, t_f] \), for systems as just described,
+the following definitions hold:
+\begin{defn}[State \& Control Trajectories]
+	A history of control-input values  \( \mathbfup{u}(t) \)
+	over the interval \( [t_0, t_f] \)
+	is denoted by \( \mathbfup{u} \)
+	and is called a \emph{control history}, or simply a \emph{control}.
+	\par\noindent
+	A history of state values  \( \mathbfup{x}(t) \)
+	over the interval \( [t_0, t_f] \)
+	is called a \emph{state trajectory}
+	and is denoted by \( \mathbfup{x} \).
+\end{defn}\noindent
+The terms “history”, “curve”, and “trajectory” are interchangeable.
+Note carefully, however, the distinction between
+the state \emph{trajectory} \( \mathbfup{x} \)
+and the instantaneous \emph{value} \( \mathbfup{x}(t) \) of the state vector
+at some given time \( t \).
+
+
+\subsection{Modeling Physical Constraints}\label{sec:constraints}
+There will often be constraints on the states or the control inputs.
+These may be physical in nature
+(\eg, that the altitude of a rocket must always be greater than zero
+or that the rate of mass-change due to fuel-flow must always be negative)
+or regulatory (\eg, altitude or power limits).
+
+
+\subsection{Specifying a Performance Criterion}\label{sec:critereon}
+
+\cleardoublepage\printbibliography[heading=bibintoc]
+
+%\cleardoublepage
+%\phantomsection\addcontentsline{toc}{section}{\indexname}
+%\printindex
+\end{document}
