@@ -106,6 +106,8 @@
 \newcommand*{\vecx}{{\mathbf{x}}}
 
 \newcommand*{\intt}[1]{\int_{t_\il}^{t_\fl}\!\!#1}
+\newcommand*{\abs}[1]{|#1|}	% {\lvert#1\rvert}
+\newcommand*{\norm}[1]{‖#1‖}	% {\lVert#1\rVert}
 
 \newcommand*{\textinterject}[1]{\text{\enspace#1\enspace}}
 
@@ -297,7 +299,8 @@ or regulatory (\eg, altitude or power limits).
 
 The usual way of indicating these constraints is
 with a set of predicates (often inequalities) on state or input variables,
-\eg, $| x_1(t) | < 2$.
+\eg, $\abs{ x_1(t) } ≤ 2$.
+
 
 \subsection{Specifying a Performance Criterion}\label{sec:criterion}
 Obviously, if a control system is to be “optimal”,
@@ -325,8 +328,7 @@ The choice of $h$ \& $g$ usually has some physical motivation.
 \end{ex}\noindent
 Other common performance measures are minimum-final-deviation from a reference, \ie,
 \[
-%	J =	\left‖ \mathbf{r}(t_\fl) - \vecx(t_\fl) \right‖^2 =
-	J =	‖ \mathbf{r}(t_\fl) - \vecx(t_\fl) ‖^2 =
+	J =	\norm{ \mathbf{r}(t_\fl) - \vecx(t_\fl) }^2 =
 		\sum_{i=1}^n \left[ x_i(t_\fl) - r_i(t_\fl) \right]^2,
 \]
 and minimum-control-effort, \ie,
