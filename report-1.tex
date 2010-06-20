@@ -107,6 +107,8 @@
 
 \newcommand*{\intt}[1]{\int_{t_\ini}^{t_\fin}\!\!#1}
 
+\newcommand*{\textinterject}[1]{\text{\enspace#1\enspace}}
+
 % Differential d
 \newcommand*{\diffd}{d}	% ⅆ
 \makeatletter
@@ -246,7 +248,7 @@ to the set of equations in~\eqref{eq:stateeq} above:
 		\begin{bmatrix}
 			x_1(t) \\ x_2(t) \\ \vdots \\ x_n(t)
 		\end{bmatrix}
-		\text{ and }
+		\textinterject{and}
 		\vecu(t) \triangleq
 		\begin{bmatrix}
 			u_1(t) \\ u_2(t) \\ \vdots \\ u_m(t)
@@ -330,7 +332,7 @@ Other common performance measures are minimum-final-deviation from a reference, 
 and minimum-control-effort, \ie,
 \[
 	J = \intt{u(t) \dd t}
-		\text{ or }
+		\textinterject{or}
 	J = \intt{u^2(t) \dd t}
 \]
 for fuel or energy use, respectively.
