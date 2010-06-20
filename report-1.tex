@@ -99,13 +99,13 @@
 
 
 % Local math stuff
-\newcommand*{\fin}{{\mathrm{f}}}
-\newcommand*{\ini}{0}	%{{\mathrm{i}}}
+\newcommand*{\fl}{{\mathrm{f}}}
+\newcommand*{\il}{0}	%{{\mathrm{i}}}
 \newcommand*{\veca}{{\mathbf{a}}}
 \newcommand*{\vecu}{{\mathbf{u}}}
 \newcommand*{\vecx}{{\mathbf{x}}}
 
-\newcommand*{\intt}[1]{\int_{t_\ini}^{t_\fin}\!\!#1}
+\newcommand*{\intt}[1]{\int_{t_\il}^{t_\fl}\!\!#1}
 
 \newcommand*{\textinterject}[1]{\text{\enspace#1\enspace}}
 
@@ -268,16 +268,16 @@ The state equations can now be rewritten as
 where the definition of \( \veca \) in \eqref{eq:stateeq:vect}
 is apparent by comparison to \eqref{eq:stateeq}.
 
-Over the time interval \( t \in [t_\ini, t_\fin] \), for systems as just described,
+Over the time interval \( t \in [t_\il, t_\fl] \), for systems as just described,
 the following definitions hold:
 \begin{defn}[State \& Control Trajectories]
 	A history of control-input values  \( \vecu(t) \)
-	over the interval \( [t_\ini, t_\fin] \)
+	over the interval \( [t_\il, t_\fl] \)
 	is denoted by \( \vecu \)
 	and is called a \emph{control history}, or simply a \emph{control}.
 	\par\noindent
 	A history of state values  \( \vecx(t) \)
-	over the interval \( [t_\ini, t_\fin] \)
+	over the interval \( [t_\il, t_\fl] \)
 	is called a \emph{state trajectory}
 	and is denoted by \( \vecx \).
 \end{defn}\noindent
@@ -308,26 +308,26 @@ to step or ramp input, or a frequency response characteristic.
 More generally, we define a performance measure
 \begin{equation}
 	\label{eq:measure}
-	J = \func{h}{\vecx(t_\fin),t_\fin} +
+	J = \func{h}{\vecx(t_\fl),t_\fl} +
 		\intt{\func{g}{\vecx(t), \vecu(t), t} \dd t}
 \end{equation}
 for some scalar functions $h$ \& $g$, then attempt to minimize $J$.
 The choice of $h$ \& $g$ usually has some physical motivation.
 \begin{ex}[Minimum-Time Problems]
 	If the goal of the controller is to transfer the system
-	from an arbitrary initial state $\vecx(t_\ini) = \vecx_\ini$
+	from an arbitrary initial state $\vecx(t_\il) = \vecx_\il$
 	to a specified target space $S$ in minimum time,
 	then the performance measure to be minimized is
 	\[
-		J = t_\fin - t_\ini = \intt{\dd t},
+		J = t_\fl - t_\il = \intt{\dd t},
 	\]
-	with $t_\fin$ defined as the first instant when $\vecx(t) \in S$.
+	with $t_\fl$ defined as the first instant when $\vecx(t) \in S$.
 \end{ex}\noindent
 Other common performance measures are minimum-final-deviation from a reference, \ie,
 \[
-%	J =	\left‖ \mathbf{r}(t_\fin) - \vecx(t_\fin) \right‖^2 =
-	J =	‖ \mathbf{r}(t_\fin) - \vecx(t_\fin) ‖^2 =
-		\sum_{i=1}^n \left[ x_i(t_\fin) - r_i(t_\fin) \right]^2,
+%	J =	\left‖ \mathbf{r}(t_\fl) - \vecx(t_\fl) \right‖^2 =
+	J =	‖ \mathbf{r}(t_\fl) - \vecx(t_\fl) ‖^2 =
+		\sum_{i=1}^n \left[ x_i(t_\fl) - r_i(t_\fl) \right]^2,
 \]
 and minimum-control-effort, \ie,
 \[
