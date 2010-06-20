@@ -294,11 +294,8 @@ or that the rate of mass-change due to fuel-flow must always be negative)
 or regulatory (\eg, altitude or power limits).
 
 The usual way of indicating these constraints is
-with a set of predicates (often inequalities) on state or input variables, \eg,
-\[
-%	\left| x_1(t) \right| < 2
-	0 \leq x_1(t) \leq 2.
-\]
+with a set of predicates (often inequalities) on state or input variables,
+\eg, $| x_1(t) | < 2$.
 
 \subsection{Specifying a Performance Criterion}\label{sec:criterion}
 Obviously, if a control system is to be “optimal”,
@@ -326,7 +323,8 @@ The choice of $h$ \& $g$ usually has some physical motivation.
 \end{ex}\noindent
 Other common performance measures are minimum-final-deviation from a reference, \ie,
 \[
-	J =	\left] \mathbf{r}(t_\fin) - \vecx(t_\fin) \right[^2 =
+%	J =	\left‖ \mathbf{r}(t_\fin) - \vecx(t_\fin) \right‖^2 =
+	J =	‖ \mathbf{r}(t_\fin) - \vecx(t_\fin) ‖^2 =
 		\sum_{i=1}^n \left[ x_i(t_\fin) - r_i(t_\fin) \right]^2,
 \]
 and minimum-control-effort, \ie,
