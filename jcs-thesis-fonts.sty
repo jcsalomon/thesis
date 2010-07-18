@@ -1,16 +1,26 @@
 \ProvidesPackage{jcs-thesis-fonts}
   [2010/05/14 v0.1 Customize fonts for my thesis]
-\usepackage{ifxetex}
+\RequirePackage{ifxetex,ifluatex}
 
 \RequirePackage{amsmath}	% If loaded, must precede unicode-math
-\ifxetex	% XɘLᴬTeX & fonts
+
+\newif\ifmoderntex
+
+\ifxetex
 	\usepackage{fontspec, xunicode, xltxtra, unicode-math}
-	\setmainfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Constantia}
-	\setsansfont[Mapping=tex-text,Numbers={OldStyle,Proportional}]{Candara}
+	\moderntextrue
+\fi
+\ifluatex
+	\usepackage{fontspec, unicode-math}
+	\moderntextrue
+\fi
+
+\ifmoderntex
+	\setmainfont[Ligatures=TeX,Numbers={OldStyle,Proportional}]{Constantia}
+	\setsansfont[Ligatures=TeX,Numbers={OldStyle,Proportional}]{Candara}
 	\setmonofont[Numbers=OldStyle]{Consolas}
 	\setmathfont{Cambria Math}
 \else
 	\usepackage[utf8]{inputenc}
 	\let\mathbfup\mathbf
 \fi
-

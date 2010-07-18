@@ -1,6 +1,5 @@
 \ProvidesPackage{jcs-thesis-math}
   [2010/05/14 v0.1 Customize math stuff]
-\usepackage{ifxetex}
 
 % Matrices, vectors, functions, etc.
 \RequirePackage{mlist}
@@ -15,7 +14,7 @@
 \newcommand*{\vecx}{{\mathbf{x}}}
 
 % Superscript for optimality, e.g., x*, u*
-%\ifxetex\newcommand*{\opt}{^{⋆}}\else
+%\ifmoderntex\newcommand*{\opt}{^{⋆}}\else
 \newcommand*{\opt}{^\star}
 %\fi
 
@@ -46,7 +45,7 @@
 	\else\ifx \jcs@dd@arg\{%
 		\let \@jcs@dd@space = \!%
 	\fi\fi\fi\@jcs@dd@space}
-\ifxetex
+\ifmoderntex
 	\catcode`\ⅆ=\active
 	\letⅆ=\dd
 \else\fi
