@@ -27,24 +27,33 @@
 \newcommand*{\textinterject}[1]{\text{\enspace#1\enspace}}
 
 % Differential d
-\newcommand*{\diffd}{d}	% or {ⅆ} or {\mathrm{d}}
-% Give \dd the same height whether followed by an exponent or no.
-\newcommand*{\dd}{\@ifnextchar^{\jcs@dd}{\jcs@dd^{}}}
-% Give \jcs@dd effective height of \mathstrut,
-% 	operator spacing on left & funky spacing code on right.
-\def \jcs@dd^#1{\mathop{\diffd\mathstrut}\nolimits^{#1}\jcs@dd@eatspace}
-% Look at what follows the \dd, then put space (or not).
-\def \jcs@dd@eatspace{\futurelet\jcs@dd@arg\jcs@dd@putspace}
-% Put space, or don’t, depending on whether next token is brace or no
-\def \jcs@dd@putspace{%
-	\def \@jcs@dd@space {\!\!}%
-	\ifx \jcs@dd@arg(%
-		\let \@jcs@dd@space = \!%
-	\else\ifx \jcs@dd@arg[%
-		\let \@jcs@dd@space=  \!%
-	\else\ifx \jcs@dd@arg\{%
-		\let \@jcs@dd@space = \!%
-	\fi\fi\fi\@jcs@dd@space}
+
+% Choose the glyph to be shown. TODO: Make this a user option.
+\newcommand*{\diffdchar}{d}	% or {ⅆ} or {\mathrm{d}}
+
+% The negative space \! eats an operator space
+\newcommand*{\dd}{\mathop{\diffdchar\!}}
+
+%% Give \dd the same height whether followed by an exponent or no.
+%\newcommand*{\dd}{\@ifnextchar^{\jcs@dd}{\jcs@dd^{}}}
+%
+%% Give \jcs@dd effective height of \mathstrut,
+%% 	operator spacing on left & funky spacing code on right.
+%\def \jcs@dd^#1{\mathop{\diffdchar\mathstrut}\nolimits^{#1}\jcs@dd@eatspace}
+%
+%% Look at what follows the \dd, then eat the right-hand operator space (or not).
+%\def \jcs@dd@eatspace{\futurelet\jcs@dd@arg\jcs@dd@eatspace}
+%
+%% Eat space, or don’t, depending on whether next token is brace or no
+%\def \jcs@dd@eatspace{%
+%	\def \@jcs@dd@negativespace {\!}%
+%	\ifx \jcs@dd@arg(%
+%		\let \@jcs@dd@negativespace = \relax%
+%	\else\ifx \jcs@dd@arg[%
+%		\let \@jcs@dd@negativespace=  \relax%
+%	\else\ifx \jcs@dd@arg\{%
+%		\let \@jcs@dd@negativespace = \relax%
+%	\fi\fi\fi\@jcs@dd@negativespace}
 \ifmoderntex
 	\catcode`\ⅆ=\active
 	\letⅆ=\dd
