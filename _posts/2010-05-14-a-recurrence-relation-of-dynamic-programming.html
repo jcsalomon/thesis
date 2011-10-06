@@ -1,0 +1,152 @@
+---
+layout:  post
+title:   "A Recurrence Relation of Dynamic Programming"
+summary: "We can express the minimum cost at any given stage
+          in terms of functions of that stage alone.
+          This leads to the embedding principle of dynamic programming."
+category: Control Theory
+tags:    [Control Systems, Dynamic Programming]
+---
+
+<p>
+  (For simplicity, this discussion will assume time-invariance.
+  If ever I need to do the time-variant version of this problem,
+  I will post about whatever differences I find.)
+</p>
+
+<p>
+  As discussed <a href="{{ site.url_root }}/{{page.previous.url}}">last time</a>,
+  we have the discrete-time system
+  (actually the discrete-time equivalent of the original system)
+\[
+  \def\avec{\boldsymbol a} \def\uvec{\boldsymbol u} \def\xvec{\boldsymbol x}
+  \def\dscrt{_{\mathrm D}}
+  \xvec[k+1] = \avec\dscrt(\xvec[k], \uvec[k]),
+\]
+  for which we wish to minimize the performance measure
+\[
+  J = h(x[N]) + \sum_{k=0}^{N-1} g\dscrt(\xvec[k], \uvec[k]).
+\]
+</p>
+
+<p>
+  Now, adapting the “tedious notation” from the other post to our purposes,
+  we have \( J_{NN}\left(\xvec(N)\right) := h(x[N]) \) defined
+  as the cost associated with whatever final state we end up with; and
+\[
+  \begin{aligned}
+  J_{N-1,N}(\xvec[N-1], \uvec[N-1])
+  := & g\dscrt(\xvec[N-1], \uvec[N-1]) + h(x[N]) \\
+  =  & g\dscrt(\xvec[N-1], \uvec[N-1]) + J_{NN}(\xvec[N])
+  \end{aligned}
+\]
+  the cost of getting to the final state \( \xvec[N] \)
+  from the penultimate state \( \xvec[N-1] \)
+  via control \( \uvec[N-1] \).
+  And, since \( \xvec[N] \) is completely determined
+  by \( \xvec[N-1] \) and \( \uvec[N-1] \), we can rewrite this as
+\[
+  \begin{multline}
+  J_{N-1,N}(\xvec[N-1], \uvec[N-1]) := \\
+  g\dscrt(\xvec[N-1], \uvec[N-1])
+  + J_{NN}(\avec\dscrt(\xvec[N-1], \uvec[N-1]))
+  \end{multline}
+\]
+This yields the optimal (<em>i.e.</em>, minimal) cost
+\[
+  \begin{multline}
+  J_{N-1,N}^* (\xvec[N-1]) := \mathrm{min}_{ \{\uvec[N-1]\} }
+  \big\{
+    g\dscrt(\xvec[N-1], \uvec[N-1]) \\
+  {} + J_{NN}(\avec\dscrt(\xvec[N-1], \uvec[N-1]))
+  \big\}
+  \end{multline}
+\]
+Denote this minimizing control function by \( \uvec^*(\xvec[N-1], N-1) \).</p>
+
+<p>Now consider the last two intervals together:
+\[
+  \begin{multline}
+  J_{N-2,N}(\xvec[N-2], \uvec[N-2], \uvec[N-1]) \\
+  \shoveleft \quad
+  = g\dscrt(\xvec[N-2], \uvec[N-2]) + g\dscrt(\xvec[N-1], \uvec[N-1]) + h(\xvec[N]) \\
+  \shoveleft \quad
+  = g\dscrt(\xvec[N-2], \uvec[N-2]) + J_{N-1,N}(\xvec[N-1], \uvec[N-1])
+  \end{multline}
+\]
+The optimal policy for this yields the cost
+\[
+  \begin{multline}
+  J_{N-2,N}^* (\xvec[N-2]) := \mathrm{min}_{ \{\uvec[N-2], \uvec[N-1]\} }
+  \big\{
+    g\dscrt(\xvec[N-2], \uvec[N-2]) \\
+  {} + J_{N-1,N}(\xvec[N-1], \uvec[N-1])
+  \big\}
+  \end{multline}
+\]</p>
+
+<p>
+  By the principle of optimality,
+  the remaining decision \( \uvec[N-1] \)
+  must be optimized with respect to \( \xvec[N-1] \)
+  regardless of the values of \( \xvec[N-2] \) and \( \uvec[N-2] \).
+  We can therefore express \( J_{N-2,N}^*(\xvec[N-2]) \)
+  in terms of \( J_{N-1,N}^*(\xvec[N-1]) \):
+\[
+  \begin{multline}
+  J_{N-2,N}^*(\xvec[N-2]) = \mathrm{min}_{ \{\uvec[N-2]\} }
+  \big\{
+    g\dscrt(\xvec[N-2], \uvec[N-2]) \\
+  {} + J_{N-1,N}^*(\xvec[N-1])
+  \big\}
+  \end{multline}
+\]
+And, as above, we can use \( \avec() \) to express everything in terms of a single time point:
+\[
+  \begin{multline}
+  J_{N-2,N}^*\left(\xvec[N-2]\right) = \mathrm{min}_{ \{\uvec[N-2]\} }
+  \big\{
+    g\dscrt(\xvec[N-2], \uvec[N-2]) \\
+  {} + J_{N-1,N}^*(\avec\dscrt(\xvec[N-2], \uvec[N-2]))
+  \big\}
+  \end{multline}
+\]
+  This, finally, points us to the recurrence relation promised.
+</p>
+
+<p>
+  For the system as described at the \( K \)<sup>th</sup>-to-last stage,
+  the minimal cost is:
+\[
+  \begin{multline}
+  J_{N-K,N}^*\left(\xvec[N-K]\right) = \\
+  \mathrm{min}_{\{\uvec[N-K], \ldots, \uvec[N]\}}
+  \left\{
+    h(\xvec[N]) + \sum_{k=N-K}^{N-1} {g\dscrt(\xvec[k],\uvec[k])}
+  \right\} \\
+  = \mathrm{min}_{\{\uvec[N-K]\}}
+  \big\{
+    g\dscrt(\xvec[N-K], \uvec[N-K]) \\
+  {} + J_{N-K+1,N}^*(\avec\dscrt( \xvec[N-K], \uvec[N-K]))
+  \big\}
+  \end{multline}
+\]
+</p>
+
+<p>
+  Notice also the <em>embedding principle</em>:
+  \( J_{N-K,N}^*(\xvec[N-K]) \) is both
+  the minimum cost for the final \( K \) stages
+  of the \( N \)-stage process
+  with state \( \xvec[N-K] \) given,
+  and equally the minimum cost for a \( K \)-stage process
+  with initial state \( \xvec[N-K] \);
+  <em>i.e.</em>, the \( K \)-stage process is <em>embedded</em>
+  in the \( N \)-stage process.
+</p>
+
+<p>
+  Next time:
+  The <a href="http://en.wikipedia.org/wiki/Hamilton-Jacobi-Bellman_equation">Hamilton-Jacobi-Bellman equation</a>
+  is analogous to this recurrence relation, but in the continuous-time case.
+</p>

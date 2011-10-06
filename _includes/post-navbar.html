@@ -1,0 +1,22 @@
+<nav>
+  <ul>
+    {% if page.previous.url %}
+    <li>
+      <a href="{{ site.url_root }}/{{ page.previous.url }}"
+         title="Previous post" rel="prev">« {{ page.previous.title }}</a>
+    </li>
+    {% endif %}
+
+    <li>
+      <a href="{{ site.url_root }}/"
+         rel="up">Blog Index</a>
+    </li>
+
+    {% if page.next.url %}
+    <li>
+      <a href="{{ site.url_root }}/{{ page.next.url }}"
+         title="Next post" rel="next">{{ page.next.title }} »</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>

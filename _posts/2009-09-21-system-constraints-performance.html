@@ -1,0 +1,155 @@
+---
+layout:  post
+title:   "Modeling the System: Constraints & Performance Evaluation"
+summary: "Not all conceivable values for the state and control vectors
+          are allowable.
+          For example, in a control system intending to drive a car,
+          speed limits must be obeyed, the car must not run out of gasoline,
+          and—even more fundamentally—the car must stay on the road!"
+category: Control Theory
+tags:    [State Space, Constraints]
+---
+
+<h2 id="admissibility">Admissibility</h2>
+
+<p>
+  Recall that the system state \(\def\xvec{\boldsymbol x} \xvec(t) \)
+  and control \(\def\uvec{\boldsymbol u} \uvec(t) \)
+  are the instantaneous values of state and control at any given time.
+  We also speak of the state <em>trajectory</em>, or control <em>history</em>,
+  to refer to the function as a whole,
+  over the entire time period \( t ∈ [t_0, t_f] \).
+</p>
+
+<p>
+  Not all conceivable values for the state and control vectors are allowable.
+  For example, in a control system intending to drive a car,
+  speed limits must be obeyed, the car must not run out of gasoline,
+  and—even more fundamentally—the car must stay on the road!
+</p>
+
+<p>
+  A simple way to indicate such constraints is with predicates
+  on system and/or control values, for example the inequalities:
+\[
+  |x_1(t)| ≤ 2 \quad\text{or}\quad {-M} ≤ u(t) ≤ 0.
+\]
+  For the soft-landing problem,
+  one important constraint is listed right there in the title:
+  the vertical velocity at touch-down must be very close to zero.
+  (The landing surface will ensure that the vertical velocity
+  <em>after</em> touchdown is zero, a process known as
+  <a href="http://lithobraking.urbanup.com/4063418">lithobraking</a>.)
+</p>
+
+<h2 id="optimality">Optimality</h2>
+
+<p>
+  Now we begin to touch on the name of this blog.
+</p>
+
+<p>
+  Once we have determined the set of “admissible” states and controls,
+  there must be some way of choosing one (control curve–state curve)-pair
+  out of the admissible region.
+  In classical control theory,
+  the measure is often the system response to step or ramp input,
+  or a frequency response characteristic.
+</p>
+
+<p>
+  For our purposes, we define a very general performance measure:
+\[
+  J = h(\xvec(t_f), t_f)
+  + \int_{t_0}^{t_f} g(\xvec(t),\uvec(t),t)\,dt
+\]
+  for some scalar functions \( h \) and \( g \).
+  An optimal system is one where \( J \) is minimized;
+  this minimal value for the performance measure we denote \( J^* \).
+</p>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>
+  When I wrote \( \uvec(t) \) above,
+  that is not to imply that the applied control at any given time
+  has been pre-programmed into the system, though such systems do exist.
+  Most systems have a <em>control law</em>,
+  mapping the system’s current state to a control input
+  that will get the system to do as we wish it to.
+  Using the “—*” notation, this means
+\[
+  \uvec^*(t) = \uvec^*(\xvec(t),t).
+\]
+</p>
+
+<p>
+  Ah, but how to determine that law? More on that next time.
+</p>
+<hr />
+
+<section id="comments">
+  <h1>Comments</h1>
+  <article>
+    <p>
+      I should really know this stuff better,
+      but I’m a little confused why you need to include (a function of)
+      the final state vector in the performance measure.
+      I know you mention that you need a final velocity tending to zero,
+      but that shouldn’t that be guaranteed by the control input?
+    </p>
+    <p>
+      Or are you using \( J \) to also shape the state trajectory?
+    </p>
+    <footer>—Will Robinson, Monday, September 21, 2009</footer>
+  </article>
+  <hr />
+  <article>
+    <p>
+      Consider a lunar lander:
+      the control will have to balance fuel-efficiency
+      with landing at the correct location!
+    </p>
+    <p>
+      And I’m pretty sure that if you leave out the final zero velocity
+      then the optimization will happily leave your engines off
+      all the way down.
+      The lunar surface will bring your speed down pretty quickly after that…
+    </p>
+    <footer>—Joel Salomon, Monday, September 21, 2009</footer>
+  </article>
+  <hr />
+  <article>
+    <p>
+      Okay, I should have read your post more carefully;
+      since you’re choosing a “(control curve–state curve)”
+      based on the optimisation,
+      I think that makes sense.
+    </p>
+    <p>
+      On the other hand,
+      if your function \( g \) had a singularity for
+      \(\text{velocity} ≠ 0\) at final time,
+      that might be able to achieve the same effect.
+      Erm, but what would that look like?
+      I guess something like \( \frac{|\boldsymbol v|⋅t}{t_f-t} \)
+      but that looks a bit nasty.
+      I don’t even know if that sort of thing is allowed.
+      Really I should study optimal control again
+      before I go talking about it. ☺
+    </p>
+    <footer>—Will Robinson, Monday, September 21, 2009</footer>
+  </article>
+  <hr />
+  <article>
+    <p>
+      That might be doable,
+      but generally the performance measure has an intuitive meaning,
+      e.g., fuel efficiency or final position accuracy.
+      Plus, I suspect that clever choices of \( g(…) \)
+      will make the optimization intractable.
+    </p>
+    <footer>—Joel Salomon, Tuesday, September 22, 2009</footer>
+  </article>
+  <hr />
+</section>

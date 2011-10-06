@@ -1,0 +1,16 @@
+<footer>
+  <p>
+    Posted
+    {% if page.categories.size > 0 %}
+      in {{ page.categories | array_to_sentence_string }}
+    {% endif %}
+    on
+    <time datetime="{{ page.date | date_to_xmlschema }}" pubdate>
+      {{ page.date | date: "%A, %x" }}.
+    </time>
+    {% if page.tags.size > 0 %}
+      <br />
+      Tags: {{ page.tags | array_to_sentence_string }}.
+    {% endif %}
+  </p>
+</footer>

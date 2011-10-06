@@ -1,0 +1,59 @@
+---
+layout:  post
+title:   "Modeling the System: State Space"
+summary: "To model a system, we want
+          “the simplest mathematical description that adequately predicts
+          the response of the system to all anticipated inputs.”"
+category: Control Theory
+tags:    [State Space]
+---
+
+<p>
+  To model a system, we want
+  “the simplest mathematical description that adequately predicts
+  the response of the system to all anticipated inputs.”
+</p>
+
+<p>
+  We restrict our discussion to systems described by
+  ordinary differential equations in state variable form.
+  Wikipedia has a decent overview of state space
+  <a href="http://en.wikipedia.org/wiki/State_space_(controls)">here</a>,
+  and the notation I’ll be using is pretty similar.
+</p>
+
+<p>
+  If \( x_1(t), x_2(t), …, x_n(t) \) are the <em>state variables</em>
+  (or the <em>states</em>) of the process at time \( t \),
+  and \( u_1(t), u_2(t), …, u_m(t) \) are <em>control inputs</em>
+  to the process at time \( t \),
+  then we can describe the system by
+  \( n \) first-order differential equations thus:
+\[
+  \begin{aligned}
+  \dot{x_1}(t) &= a_1(x_1(t), x_2(t), …, x_n(t), u_1(t), u_2(t), …, u_m(t), t) \\
+  \dot{x_2}(t) &= a_2(x_1(t), x_2(t), …, x_n(t), u_1(t), u_2(t), …, u_m(t), t) \\
+  {}           & ⋮ \\
+  \dot{x_n}(t) &= a_n(x_1(t), x_2(t), …, x_n(t), u_1(t), u_2(t), …, u_m(t), t).
+  \end{aligned}
+\]
+</p>
+
+<p>
+  Now define the state and control vectors
+\[
+  \def\avec{\boldsymbol a} \def\uvec{\boldsymbol u} \def\xvec{\boldsymbol x}
+  \xvec(t) := \begin{bmatrix} x_1(t) \\ x_2(t) \\ ⋮ \\ x_n(t) \end{bmatrix}
+  \quad\text{and}\quad
+  \uvec(t) := \begin{bmatrix} u_1(t) \\ u_2(t) \\ ⋮ \\ u_n(t) \end{bmatrix}.
+\]
+  The state equation can now be rewritten as
+\[
+  \dot\xvec = \avec(\xvec(t), \uvec(t), t)
+\]
+  where the definition of \( \avec \) is apparent.
+</p>
+
+<p>
+  Next time, a word on system & control constraints.
+</p>

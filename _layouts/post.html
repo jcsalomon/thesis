@@ -1,0 +1,14 @@
+---
+layout: base
+---
+
+<article>
+  <header>
+    <h1>{{ page.title | xml_escape }}</h1>
+    {% include post-navbar.html %}
+  </header>
+
+  {{ content }}
+
+  {% include post-footer.html %}
+</article>

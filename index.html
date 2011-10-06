@@ -1,0 +1,32 @@
+---
+layout: base
+---
+
+{% for post in site.posts %}
+<article>
+  {% unless forloop.first %}<hr />{% endunless %}
+
+  <h1><a href="{{ site.url_root }}/{{ post.url }}">{{ post.title | xml_escape }}</a></h1>
+
+  {% if post.summary %}
+    {{ post.summary | markdownify }}
+  {% endif %}
+
+  <footer>
+    <p>
+      Posted
+      {% if post.categories.size > 0 %}
+        in {{ post.categories | array_to_sentence_string }}
+      {% endif %}
+      on
+      <time datetime="{{ post.date | date_to_xmlschema }}" pubdate>
+        {{ post.date | date: "%A, %x" }}.
+      </time>
+      {% if post.tags.size > 0 %}
+        <br />
+        Tags: {{ post.tags | array_to_sentence_string }}.
+      {% endif %}
+    </p>
+  </footer>
+</article>
+{% endfor %}

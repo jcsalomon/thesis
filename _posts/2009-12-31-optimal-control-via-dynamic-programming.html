@@ -1,0 +1,161 @@
+---
+layout:  post
+title:   "Optimal Control via Dynamic Programming"
+summary: "The optimal control problem boils down to finding
+          an admissible control which will cause the system to follow
+          an admissible trajectory which will minimize the performance measure.
+          We discuss the use of dynamic programming in optimization."
+category: Control Theory
+tags:    [Control Systems, Dynamic Programming]
+---
+
+<h2 id="optimal_control_problem">The Optimal Control Problem</h2>
+
+<p>
+  To recap from my last post (was that in September? yikes!),
+  the optimal control problem boils down to finding an admissible control
+  \( \def\uvec{\boldsymbol u} \uvec^* \in U \)
+  which will cause the system, itself described by
+\[
+  \def\avec{\boldsymbol a} \def\xvec{\boldsymbol x}
+  \dot\xvec(t) = \avec(\xvec(t), \uvec(t), t),
+\]
+  to follow an admissible trajectory \( \xvec^* \in X \)
+  which will minimize the performance measure
+\[
+  J = h(\xvec(t_f), t_f)
+  + \int_{t_0}^{t_f} g(\xvec(t),\uvec(t),t)\,dt.
+\]
+  We seek to find this in the form of an optimal <em>control law</em>
+  or <em>policy</em> \( \boldsymbol f \) such that
+\[
+  \uvec^*(t) = \boldsymbol f(\xvec(t), t).
+\]
+  This post will discuss the use of
+  <a href="http://en.wikipedia.org/wiki/Dynamic_programming"><em>dynamic
+      programming</em></a>
+  in optimization
+</p>
+
+<h2 id="dynamic_programming">Dynamic Programming</h2>
+
+<p>
+  Consider a discrete-time version of the system above:
+\[
+  \xvec([k+1] Δt) ≈
+  \xvec(kΔt)
+  + Δt ⋅ \avec\left(\xvec(kΔt), \uvec(kΔt), kΔt\right).
+\]
+  More precisely, and using the notation \( \text{—}[k] ≡ \text{—}(kΔt) \),
+  the discrete-time system equation is
+\[
+  \def\dscrt{_{\mathrm D}}
+  \xvec[k+1] = \avec\dscrt\left(\xvec[k], \uvec[k], k\right).
+\]
+  The performance measure can be discretized thus:
+\[
+  J = h(x(NΔt)) + \int_0^{Δt} g\,dt + \int_{Δt}^{2Δt} g\,dt
+  + ⋯ + \int_{(N-1)Δt}^{NΔt} g\,dt,
+\]
+  which can be approximated by
+\[
+  J ≈ h(x[N]) + Δt \sum_{k=0}^{N-1}g(\xvec[k], \uvec[k]),
+\]
+  or it can be exactly expressed by
+\[
+  J = h(x[N]) + \sum_{k=0}^{N-1}g\dscrt(\xvec[k], \uvec[k]).
+\]
+  (Note that \( \avec\dscrt \) and \( g\dscrt \) are <em>not</em>
+  merely the linearized approximations to \( \avec \) and \( g \),
+  but have been defined to be exact over the time period in question.
+  Note also that for simplicity I have assumed a time-invariant system.)
+</p>
+
+<p>
+  Now to discuss dynamic programming we need some tedious notation:
+</p>
+
+<table>
+  <tr>
+    <th>\( \alpha \)</th>
+    <td>
+      the current state
+    </td>
+  </tr>
+  <tr>
+    <th>\( u_i \)</th>
+    <td>
+      an allowable decision (control)
+    </td>
+  </tr>
+  <tr>
+    <th>\( x_i \)</th>
+    <td>
+      a state adjacent to \( \alpha \),
+      reachable by applying control \( u_i \)
+    </td>
+  </tr>
+  <tr>
+    <th>\( h \)</th>
+    <td>the final state</td>
+  </tr>
+  <tr>
+    <th>\( J_{\alpha x_i} \)</th>
+    <td>
+      the cost of moving from current state \( \alpha \)
+      to adjacent state \( x_i \)
+    </td>
+  </tr>
+  <tr>
+    <th>\( J_{x_i h}^* \)</th>
+    <td>
+      the minimum cost to reach final state \( h \)
+      from arbitrary state \( x_i \)
+    </td>
+  </tr>
+  <tr>
+    <th>\( C_{\alpha x_i h}^* \)</th>
+    <td>
+      the minimum cost to reach final state \( h \)
+      from current state \( \alpha \)
+      via adjacent state \( x_i \)
+    </td>
+  </tr>
+  <tr>
+    <th>\( J_{\alpha h}^* \)</th>
+    <td>
+      the minimum cost to reach final state \( h \)
+      from current state \( \alpha \)
+      via any allowable path
+    </td>
+  </tr>
+  <tr>
+    <th>\( u^*(\alpha) \)</th>
+    <td>
+      the optimal decision (control) at current state \( \alpha \)
+    </td>
+  </tr>
+</table>
+
+<p>
+  See Wikipedia on
+  <a href="http://en.wikipedia.org/wiki/Optimal_substructure">optimal
+    substructure</a>
+  and the
+  <a href="http://en.wikipedia.org/wiki/Bellman_equation">Bellman
+    equation</a>
+  for details on this,
+  but for our purposes the Principle of Optimality implies
+\[
+  C_{\alpha x_i h}^* = J_{\alpha x_i} + J_{x_i h}^*,
+\]
+  and the optimal decision \( u^*(\alpha) \in {u_i} \)
+  is the one that leads to
+\[
+  J_{\alpha h}^* = \mathrm{min}\{C_{\alpha x_i h}^*\}.
+\]
+</p>
+
+<p>
+  Next time: determining a recurrence relation for the optimal cost function.
+</p>

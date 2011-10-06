@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>
+    {{ site.title | xml_escape }}
+    {% if page.title %}» {{ page.title | xml_escape }}{% endif %}
+  </title>
+
+  <link rel="icon" href="{{ site.url_root }}/toy_rocket.ico" />
+
+  <link rel="stylesheet" type="text/css" href="/css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="/css/general.css" />
+  <link rel="stylesheet" type="text/css" href="/css/grid.css" />
+
+  <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+</head>
+
+<body>
+{% include header.html %}
+
+<section class="row">
+  <div class="col col_7">
+    {{ content }}
+  </div>
+
+  <aside class="col col_5">
+    {% include sidebar.html %}
+  </aside>
+</section>
+
+{% include footer.html %}
+</body>
+</html>

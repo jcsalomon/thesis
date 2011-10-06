@@ -1,0 +1,10 @@
+title:    "Optimal Control Blog"
+subtitle: "Rocket Landing and More"
+author:   "Joel C. Salomon"
+contact:  "joelcsalomon@gmail.com"
+github:   "https://github.com/jcsalomon"
+
+permalink: blog/:year-:month-:day-:title.html
+
+exclude: readme.md
+url_root: "/thesis"
