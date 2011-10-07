@@ -15,13 +15,25 @@ layout: base
   <footer>
     <p>
       Posted
+
       {% if post.categories.size > 0 %}
         in {{ post.categories | array_to_sentence_string }}
       {% endif %}
+
       on
       <time datetime="{{ post.date | date_to_xmlschema }}" pubdate>
-        {{ post.date | date: "%A, %x" }}.
+        {{ post.date | date: "%A, %x" }},
       </time>
+
+      with
+      {% if post.comments %}
+        <a href="{{ site.url_root }}/{{ post.url }}#comments">
+          {{ post.comments }}
+          comment{% if post.comments > 1%}s{% endif %}</a>.
+      {% else %}
+        no comments.
+      {% endif %}
+
       {% if post.tags.size > 0 %}
         <br />
         Tags: {{ post.tags | array_to_sentence_string }}.
